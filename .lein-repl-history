@@ -1,0 +1,14 @@
+(use '(units unit quantity siunits))
+meter
+(q* 6 meter ampere)
+tesla
+(udiv newton (udiv meter sec) coulomb)
+(use '(units unit quantity siunits))
+(udiv newton (udiv meter sec) coulomb)
+(q* 3 4)
+(q* 3 4 meter)
+(q* 3 4 meter (q* 5 ampere))
+(q* 3 4 meter (q/ 5 ampere))
+(q* 3 4 meter (qd 5 ampere))
+(q* 3 4 meter (qd 5 ampere ampere))
+(q* 3 4 meter (qd 5 ampere ampere 5))
