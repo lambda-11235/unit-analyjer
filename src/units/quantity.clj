@@ -62,3 +62,12 @@
     (quantity (/ (:measure xq) (:measure yq)) (udiv (:unit xq) (:unit yq)))))
 
 (defn qd [& xs] (reduce -qd xs))
+
+(defn qpow [x n]
+  {:pre [(integer? n)]}
+  (cond (== n 0) 1
+        (< n 0) (qd 1 (qpow x (- n)))
+        :else (loop [res x i n]
+                (if (== i 1)
+                  res
+                  (recur (q* res x) (dec i))))))
