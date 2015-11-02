@@ -1,6 +1,7 @@
 
 (ns units.siunits
-  (:use units.unit))
+  (:use units.unit)
+  (:use units.quantity))
 
 (declare siunit?)
 
@@ -48,6 +49,30 @@
 (defn siunit? [x] (or (instance? SIUnit x)
                       (unitless? x)))
 
+
+;; Unit prefixes
+(defn yotta [q] (q* q 1e24))
+(defn zetta [q] (q* q 1e21))
+(defn exa [q] (q* q 1e18))
+(defn peta [q] (q* q 1e15))
+(defn tera [q] (q* q 1e12))
+(defn giga [q] (q* q 1e9))
+(defn mega [q] (q* q 1e6))
+(defn kilo [q] (q* q 1000))
+(defn hecto [q] (q* q 100))
+(defn deka [q] (q* q 10))
+(defn deci [q] (qd q 10))
+(defn centi [q] (qd q 100))
+(defn milli [q] (qd q 1000))
+(defn micro [q] (qd q 1e6))
+(defn nano [q] (qd q 1e9))
+(defn pico [q] (qd q 1e12))
+(defn femto [q] (qd q 1e15))
+(defn atto [q] (qd q 1e18))
+(defn zepto [q] (qd q 1e21))
+(defn yocto [q] (qd q 1e24))
+
+;; Base units
 (def meter (siunit 1 0 0 0 0 0 0))
 (def kilogram (siunit 0 1 0 0 0 0 0))
 (def sec (siunit 0 0 1 0 0 0 0))
@@ -56,6 +81,10 @@
 (def mole (siunit 0 0 0 0 0 1 0))
 (def candela (siunit 0 0 0 0 0 0 1))
 
+(def gram (qd kilogram 1000))
+
+
+;; Derived units
 (def radian unitless)
 (def steradian unitless)
 (def hertz (siunit 0 0 -1 0 0 0 0))

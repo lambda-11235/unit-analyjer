@@ -65,3 +65,9 @@ amu
 (grav-const)
 grav-const
 coulomb-const
+(use 'unit.siunits)
+(use 'units.siunits)
+(milli meter)
+(micro meter)
+(kilo gram)
+kilogram
