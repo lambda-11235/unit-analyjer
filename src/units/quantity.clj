@@ -31,7 +31,9 @@
 (defn same-units
   "Determine if two quantities have the same units."
   [x y]
-  (= (:unit (quantity x)) (:unit (quantity y))))
+  (let [xu (:unit (quantity x)) yu (:unit (quantity y))]
+    (or (and (unitless? xu) (unitless? yu))
+        (= xu yu))))
 
 (defn- -q+ [x y]
   {:pre [(same-units x y)]

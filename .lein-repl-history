@@ -71,3 +71,7 @@ coulomb-const
 (micro meter)
 (kilo gram)
 kilogram
+(use '[units siunits quantity])
+(same-units 0 (qd meter meter))
+(use '[units siunits quantity])
+(same-units 0 (qd meter meter))

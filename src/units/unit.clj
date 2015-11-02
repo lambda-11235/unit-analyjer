@@ -8,7 +8,8 @@
 (defprotocol Unit
   (umul- [x y] "Multiply one unit by another.")
   (udiv- [x y] "Divide one unit by another.")
-  (upow- [x n] "Raise a unit to the nth power."))
+  (upow- [x n] "Raise a unit to the nth power.")
+  (unitless?- [x] "Is this unit unitless."))
 
 (defn umul [& xs] (cond (empty? xs) unitless
                         (unitless? (first xs)) (apply #'umul (rest xs))
@@ -28,4 +29,6 @@
                     (= unitless x)))
 
 (def unitless "The unitless unit" 'unitless)
-(defn unitless? [x] (= x unitless))
+
+(defn unitless? [x] (or (= x unitless)
+                        (if (unit? x) (unitless?- x))))

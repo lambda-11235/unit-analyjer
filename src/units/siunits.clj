@@ -37,6 +37,9 @@
     {:pre [(number? n)]}
     (SIUnit. (* m1 n) (* kg1 n) (* s1 n) (* A1 n) (* K1 n) (* mol1 n)
              (* cd1 n)))
+
+  (unitless?- [u]
+    (every? zero? (vals u)))
   )
 
 (defmethod print-method SIUnit [u ^java.io.Writer w]
