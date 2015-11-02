@@ -4,14 +4,37 @@
   (:use units.quantity))
 
 (declare siunit?)
+(declare hertz newton pascal joule watt coulomb volt farad ohm siemens weber
+         tesla henry lumen lux becquerel gray sievert katal)
 
 (defrecord SIUnit [m kg s A K mol cd]
   Object
 
   (toString [this]
-    (let [xs (filter #(not (== (second %) 0)) this)]
-      (apply #'str (interpose " " (map #(str (name (first %)) "^" (second %))
-                                       xs)))))
+    (condp = this
+      hertz "Hz"
+      newton "N"
+      pascal "Pa"
+      joule "J"
+      watt "W"
+      coulomb "C"
+      volt "V"
+      farad "F"
+      ohm "Ω"
+      siemens "S"
+      weber "Wb"
+      tesla "T"
+      henry "H"
+      lumen "lm"
+      lux "lx"
+      becquerel "Bq"
+      gray "Gy"
+      sievert "Sv"
+      katal "kat"
+
+      (let [xs (filter #(not (== (second %) 0)) this)]
+        (apply #'str (interpose " " (map #(str (name (first %)) "^" (second %))
+                                         xs))))))
 
   Unit
 

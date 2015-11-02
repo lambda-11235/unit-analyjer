@@ -77,3 +77,20 @@ kilogram
 (same-units 0 (qd meter meter))
 (use '[units siunits quantity])
 (q- meter ampere)
+(use '[unit quantity siunits])
+(use '[units quantity siunits])
+meter
+henry
+(case henry "H")
+(case henry henry "H")
+(use '[units quantity siunits])
+henry
+meter
+(case henry henry "H")
+(case henry henry "H" nil)
+(doc condp)
+(use '[units quantity siunits])
+meter
+henry
+ohm
+(q* 5 ohm)
