@@ -35,6 +35,11 @@
     (or (and (unitless? xu) (unitless? yu))
         (= xu yu))))
 
+(defn q= [x y]
+  (let [xq (quantity x) yq (quantity y)]
+    (and (== (:measure xq) (:measure yq))
+         (same-units xq yq))))
+
 (defn- -q+ [x y]
   {:pre [(same-units x y)]
    :post [(quantity? %)]}
