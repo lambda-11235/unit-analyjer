@@ -78,3 +78,7 @@
                 (if (== i 1)
                   res
                   (recur (q* res x) (dec i))))))
+
+(defn qsqrt [x]
+  (let [q (quantity x)]
+    (quantity (Math/sqrt (:measure q)) (usqrt (:unit q)))))

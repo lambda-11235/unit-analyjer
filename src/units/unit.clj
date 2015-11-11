@@ -8,7 +8,7 @@
 (defprotocol Unit
   (umul- [x y] "Multiply one unit by another.")
   (udiv- [x y] "Divide one unit by another.")
-  (upow- [x n] "Raise a unit to the nth power.")
+  (usqrt- [x] "Takes the square root of a unit.")
   (unitless?- [x] "Is this unit unitless."))
 
 (defn umul [& xs] (cond (empty? xs) unitless
@@ -22,8 +22,8 @@
                                   (apply #'udiv (upow y -1) ys)
                                   (apply #'udiv (udiv- x y) ys)))))
 
-(defn upow [x n] (cond (unitless? x) unitless
-                       :else (upow- x n)))
+(defn usqrt [x] (cond (unitless? x) unitless
+                      :else (usqrt- x)))
 
 (defn unit? [x] (or (satisfies? Unit x)
                     (= unitless x)))

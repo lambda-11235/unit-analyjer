@@ -21,4 +21,6 @@
 
     (is (q= (q* 0 meter) (q- meter meter)))
     (is (thrown? AssertionError (q- meter sec)))
+
+    (is (q= 1/6 (qd 1 2 3)))
     ))

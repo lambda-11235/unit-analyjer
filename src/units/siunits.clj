@@ -56,10 +56,11 @@
         (SIUnit. (- m1 m2) (- kg1 kg2) (- s1 s2) (- A1 A2) (- K1 K2)
                  (- mol1 mol2) (- cd1 cd2)))))
 
-  (upow- [{m1 :m kg1 :kg s1 :s A1 :A K1 :K mol1 :mol cd1 :cd} n]
-    {:pre [(number? n)]}
-    (SIUnit. (* m1 n) (* kg1 n) (* s1 n) (* A1 n) (* K1 n) (* mol1 n)
-             (* cd1 n)))
+  (usqrt- [x]
+    (if (every? identity (map #(even? (second %)) x))
+      (apply ->SIUnit (map #(/ (second %) 2) x))
+      (throw (IllegalArgumentException. (str "Can't take square root of odd powered SI unit "
+                                             x)))))
 
   (unitless?- [u]
     (every? zero? (vals u)))
