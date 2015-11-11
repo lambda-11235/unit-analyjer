@@ -18,6 +18,8 @@
 
 
 (defn quantity 
+  "Given on argument this function coerces it into a quantity.
+  Given a number and a unit it constructs a quantity."
   ([x] {:pre [(or (quantity? x) (number? x) (unit? x))]}
    (cond (quantity? x) x
          (number? x) (Quantity. x unitless)
@@ -34,6 +36,18 @@
   (let [xu (:unit (quantity x)) yu (:unit (quantity y))]
     (or (and (unitless? xu) (unitless? yu))
         (= xu yu))))
+
+(defn map-measure
+  "Applies a function to the measure part of a quantity."
+  [f x]
+  {:pre [(fn? f) (quantity? x)]}
+  (quantity (f (:measure x)) (:unit x)))
+
+(defn map-unit
+  "Applies a function to the unit part of a quantity."
+  [f x]
+  {:pre [(fn? f) (quantity? x)]}
+  (quantity (:measure x) (f (:unit x))))
 
 (defn q= [x y]
   (let [xq (quantity x) yq (quantity y)]
