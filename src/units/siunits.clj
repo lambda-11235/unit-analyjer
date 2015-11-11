@@ -42,19 +42,16 @@
     {:pre [(siunit? y)]}
     (if (unitless? y)
       x
-      (let [{m1 :m kg1 :kg s1 :s A1 :A K1 :K mol1 :mol cd1 :cd} x
-            {m2 :m kg2 :kg s2 :s A2 :A K2 :K mol2 :mol cd2 :cd} y]
-        (SIUnit. (+ m1 m2) (+ kg1 kg2) (+ s1 s2) (+ A1 A2) (+ K1 K2)
-                 (+ mol1 mol2) (+ cd1 cd2)))))
+      (apply ->SIUnit (map + (vals x) (vals y)))))
 
   (udiv- [x y]
     {:pre [(siunit? y)]}
-    (if (unitless? y)
-      x
-      (let [{m1 :m kg1 :kg s1 :s A1 :A K1 :K mol1 :mol cd1 :cd} x
-            {m2 :m kg2 :kg s2 :s A2 :A K2 :K mol2 :mol cd2 :cd} y]
-        (SIUnit. (- m1 m2) (- kg1 kg2) (- s1 s2) (- A1 A2) (- K1 K2)
-                 (- mol1 mol2) (- cd1 cd2)))))
+    (cond (unitless? x) unitless
+          (unitless? y) x
+          :else (apply ->SIUnit (map - (vals x) (vals y)))))
+
+  (uinv- [x]
+    (apply ->SIUnit (map - (vals x))))
 
   (usqrt- [x]
     (if (every? identity (map #(even? (second %)) x))

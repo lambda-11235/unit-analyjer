@@ -3,11 +3,11 @@
 
 (declare unitless)
 (declare unitless?)
-(declare upow)
 
 (defprotocol Unit
   (umul- [x y] "Multiply one unit by another.")
   (udiv- [x y] "Divide one unit by another.")
+  (uinv- [x] "Takes the inverse of a unit.")
   (usqrt- [x] "Takes the square root of a unit.")
   (unitless?- [x] "Is this unit unitless."))
 
@@ -19,7 +19,9 @@
                         (== (count xs) 1) (first xs)
                         :else (let [[x y & ys] xs]
                                 (if (unitless? x)
-                                  (apply #'udiv (upow y -1) ys)
+                                  (if (unitless? y)
+                                    unitless
+                                    (uinv- y))
                                   (apply #'udiv (udiv- x y) ys)))))
 
 (defn usqrt [x] (cond (unitless? x) unitless
