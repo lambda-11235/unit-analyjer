@@ -6,7 +6,7 @@
 
 (defrecord Quantity [measure unit]
   Object
-  
+
   (toString [this]
     (if (unitless? (:unit this))
       (str (:measure this))
@@ -17,7 +17,7 @@
   (.write w (str q)))
 
 
-(defn quantity 
+(defn quantity
   "Given on argument this function coerces it into a quantity.
   Given a number and a unit it constructs a quantity."
   ([x] {:pre [(or (quantity? x) (number? x) (unit? x))]}

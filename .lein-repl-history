@@ -134,3 +134,9 @@ ohm
 (use '[units siunits quantity unit])
 (map-unit #(constantly 2) (q* 2 meter))
 (map-unit #((constantly 2) %) (q* 2 meter))
+(use '[units unit quatity siunits constants])
+(use '[units unit quantity siunits constants])
+(def m (q* 31 (kilo gram)))
+m
+(defn mass->energy [mass] (q* mass (qpow speed-of-light 2)))
+(mass->energy m)

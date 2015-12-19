@@ -11,7 +11,9 @@
 
     ;; NOTE: 0 != 0 m
     (is (q= meter meter))
+    (is (not (q= meter ampere)))
     (is (q= 0 0.0))
+    (is (not (q= 0 0.1)))
     ))
 
 (deftest arith-test
