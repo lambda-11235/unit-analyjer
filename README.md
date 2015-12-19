@@ -20,4 +20,4 @@ user=> (defn mass->energy [mass] (q* mass (qpow speed-of-light 2)))
 #'user/mass->energy
 user=> (mass->energy m)
 2786141054084134684 J
-'''
+```
