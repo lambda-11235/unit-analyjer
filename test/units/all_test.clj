@@ -1,28 +1,45 @@
 (ns units.all-test
-  (:use [units quantity siunits unit])
-  (:require [clojure.test :refer :all]))
+  (:use [units quantity siunits unit]
+        [clojure.test.check [clojure-test :only [defspec]]])
+  (:require [clojure.test.check :as tc]
+            [clojure.test.check.generators :as gen]
+            [clojure.test.check.properties :as prop]))
 
-(deftest equality
-  (testing "Unit Equality Testing"
-    (is (same-units meter meter))
-    (is (same-units meter (q* 2 meter)))
-    (is (same-units 0 (qd meter meter)))
-    (is (same-units 0 0))
+(def siunit-gen
+  (gen/fmap (partial apply ->SIUnit)
+            (apply gen/tuple (repeat 7 gen/int))))
 
-    ;; NOTE: 0 != 0 m
-    (is (q= meter meter))
-    (is (not (q= meter ampere)))
-    (is (q= 0 0.0))
-    (is (not (q= 0 0.1)))
-    ))
+(def quantity-gen
+  (gen/let [n gen/int u siunit-gen]
+    (quantity n u)))
 
-(deftest arith-test
-  (testing "Arithmetic"
-    (is (q= (q* 2 meter) (q+ meter meter)))
-    (is (thrown? AssertionError (q+ meter sec)))
+(def quantities-same-unit-gen
+  (gen/let [n gen/int m gen/int u siunit-gen]
+    [(quantity n u) (quantity m u)]))
 
-    (is (q= (q* 0 meter) (q- meter meter)))
-    (is (thrown? AssertionError (q- meter sec)))
 
-    (is (q= 1/6 (qd 1 2 3)))
-    ))
+(defspec quant-eq-prop
+  100
+  (prop/for-all [n quantity-gen]
+                (q= n n)))
+
+(defspec quant-add-assoc-prop
+  100
+  (prop/for-all [[n m] quantities-same-unit-gen]
+                (q= (q+ n m) (q+ m n))))
+
+(defspec quant-mult-ident-prop
+  100
+  (prop/for-all [n quantity-gen]
+                (and (q= (q* n 1) n)
+                     (q= (qd n 1) n))))
+
+(defspec quant-mult-assoc-prop
+  100
+  (prop/for-all [n quantity-gen m quantity-gen]
+                (q= (q* n m) (q* m n))))
+
+(defspec same-unit-prop
+  100
+  (prop/for-all [[n m] quantities-same-unit-gen]
+                (same-units n m)))
