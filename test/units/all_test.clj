@@ -23,6 +23,12 @@
   (prop/for-all [n quantity-gen]
                 (q= n n)))
 
+(defspec quant-add-ident-prop
+  100
+  (prop/for-all [n quantity-gen]
+                (and (q= (q+ n 0) n)
+                     (q= (q- n 0) n))))
+
 (defspec quant-add-assoc-prop
   100
   (prop/for-all [[n m] quantities-same-unit-gen]

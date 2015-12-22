@@ -55,18 +55,22 @@
          (same-units xq yq))))
 
 (defn- -q+ [x y]
-  {:pre [(same-units x y)]
+  {:pre [(or (q= x 0) (q= y 0) (same-units x y))]
    :post [(quantity? %)]}
   (let [xq (quantity x) yq (quantity y)]
-    (quantity (+ (:measure xq) (:measure yq)) (:unit xq))))
+    (cond (q= xq 0) yq
+          (q= yq 0) xq
+          :else (quantity (+ (:measure xq) (:measure yq)) (:unit xq)))))
 
 (defn q+ [& xs] (reduce -q+ xs))
 
 (defn- -q- [x y]
-  {:pre [(same-units x y)]
+  {:pre [(or (q= x 0) (q= y 0) (same-units x y))]
    :post [(quantity? %)]}
   (let [xq (quantity x) yq (quantity y)]
-    (quantity (- (:measure xq) (:measure yq)) (:unit xq))))
+    (cond (q= xq 0) yq
+          (q= yq 0) xq
+          :else (quantity (- (:measure xq) (:measure yq)) (:unit xq)))))
 
 (defn q- [& xs] (reduce -q- xs))
 
