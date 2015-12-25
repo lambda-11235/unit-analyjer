@@ -1,4 +1,4 @@
-(defproject unit-analyjer "0.2.0"
+(defproject unit-analyjer "1.0.0"
   :description "A dimensional analysis library for Clojure."
   :license {:name "GPL 2"
             :url "https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html"}
